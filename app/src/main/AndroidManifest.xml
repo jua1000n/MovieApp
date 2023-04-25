@@ -19,7 +19,7 @@
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.Movies.NoActionBar" />
+            android:theme="@style/Theme.Movies" />
         <activity
             android:name=".ui.login.LoginUsers"
             android:exported="true"

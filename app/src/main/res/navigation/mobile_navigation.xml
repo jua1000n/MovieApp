@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.kukis.movies.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_series"
+        android:name="com.kukis.movies.ui.series.SeriesFragment"
+        android:label="@string/title_series"
+        tools:layout="@layout/fragment_series" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.kukis.movies.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_movies"
+        android:name="com.kukis.movies.ui.movies.MoviesFragment"
+        android:label="@string/title_movies"
+        tools:layout="@layout/fragment_movies" />
 </navigation>
