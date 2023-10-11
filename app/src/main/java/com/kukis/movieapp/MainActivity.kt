@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = Color.Black
                 ) {
-                    NavigationScreen(homeViewModel)
+                    NavigationScreen()
                 }
             }
         }

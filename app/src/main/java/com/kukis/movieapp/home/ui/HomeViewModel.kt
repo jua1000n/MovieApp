@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kukis.movieapp.home.domain.GetTrendingAllCase
+import com.kukis.movieapp.home.domain.GetTrendingMoviesCase
 import com.kukis.movieapp.home.ui.model.TrendingModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,10 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val getTrendingAllCase: GetTrendingAllCase
+    private val getTrendingAllCase: GetTrendingAllCase,
+    private val getTrendingMoviesCase: GetTrendingMoviesCase
 ) : ViewModel() {
-    private val _uiState = mutableStateOf<HomeUiState>(HomeUiState.Loading)
-    val uiState: State<HomeUiState> = _uiState
+    private val _uiState = mutableStateOf(CombinedUiState())
+    val uiState: State<CombinedUiState> = _uiState
 
     init {
         loadTrendingData()
@@ -26,9 +28,17 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val trendingData = getTrendingAllCase()
-                _uiState.value = HomeUiState.Success(trendingData)
+                _uiState.value = _uiState.value.copy(generalState = HomeUiState.Success(trendingData))
             } catch (e: Exception) {
-                _uiState.value = HomeUiState.Error(e)
+                _uiState.value = _uiState.value.copy(generalState = HomeUiState.Error(e))
+            }
+        }
+        viewModelScope.launch {
+            try {
+                val trendingData = getTrendingMoviesCase()
+                _uiState.value = _uiState.value.copy(moviesState = HomeUiState.Success(trendingData))
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(moviesState = HomeUiState.Error(e))
             }
         }
     }

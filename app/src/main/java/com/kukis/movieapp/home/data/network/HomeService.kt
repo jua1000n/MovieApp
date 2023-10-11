@@ -13,4 +13,11 @@ class HomeService @Inject constructor(private val homeClient: HomeClient) {
             response.body()!!
         }
     }
+
+    suspend fun getTrendingMovies():HomeResponse {
+        return withContext(Dispatchers.IO) {
+            val response = homeClient.getTrendingMovies()
+            response.body()!!
+        }
+    }
 }

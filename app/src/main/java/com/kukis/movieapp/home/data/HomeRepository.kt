@@ -11,4 +11,6 @@ import javax.inject.Singleton
 @Singleton
 class HomeRepository @Inject constructor(private val api: HomeService) {
     suspend fun getTrendingAll(): List<TrendingModel> = api.getTrendingAll().results
+
+    suspend fun getTrendingMovies(): List<TrendingModel> = api.getTrendingMovies().results
 }
