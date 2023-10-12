@@ -7,14 +7,14 @@ import javax.inject.Inject
 
 class HomeService @Inject constructor(private val homeClient: HomeClient) {
 
-    suspend fun getTrendingAll():HomeResponse {
+    suspend fun getTrendingAll(): HomeResponse {
         return withContext(Dispatchers.IO) {
             val response = homeClient.getTrendingAll()
             response.body()!!
         }
     }
 
-    suspend fun getTrendingMovies():HomeResponse {
+    suspend fun getTrendingMovies(): HomeResponse {
         return withContext(Dispatchers.IO) {
             val response = homeClient.getTrendingMovies()
             response.body()!!

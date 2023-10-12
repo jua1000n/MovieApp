@@ -1,7 +1,6 @@
 package com.kukis.movieapp.details.data.network.response
 
 import com.kukis.movieapp.details.domain.model.DetailSeasonSeriesModel
-import com.kukis.movieapp.details.domain.model.EpisodeModel
 
 data class DetailSeasonSeriesResponse(
     val _id: String?,

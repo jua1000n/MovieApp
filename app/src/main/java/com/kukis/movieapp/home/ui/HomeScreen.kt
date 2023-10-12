@@ -64,16 +64,14 @@ fun HomeScreen(navController: NavHostController) {
             when (combinedState.generalState) {
                 is HomeUiState.Loading -> {
                     Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator()
                     }
                 }
 
                 is HomeUiState.Success -> TrendingHome(
-                    (combinedState.generalState).lisTrendingModel,
-                    navController
+                    (combinedState.generalState).lisTrendingModel, navController
                 )
 
                 is HomeUiState.Error -> Text(text = "Error: ${(combinedState.generalState).throwable.message}")
@@ -84,16 +82,14 @@ fun HomeScreen(navController: NavHostController) {
             when (combinedState.moviesState) {
                 is HomeUiState.Loading -> {
                     Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator()
                     }
                 }
 
                 is HomeUiState.Success -> TrendingMovie(
-                    (combinedState.moviesState).lisTrendingModel,
-                    navController
+                    (combinedState.moviesState).lisTrendingModel, navController
                 )
 
                 is HomeUiState.Error -> Text(text = "Error en películas: ${(combinedState.moviesState).throwable.message}")
@@ -167,23 +163,21 @@ fun PagerTrendingHome(pagerState: PagerState, numberPages: Int) {
 fun ItemTrendingHome(trendingModel: TrendingModel, navController: NavHostController) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
-    Box(
-        modifier = Modifier
-            .height(670.dp)
-            .width(screenWidth)
-            .clipToBounds()
-            .clickable {
-                when (trendingModel.media_type) {
-                    "movie" -> {
-                        navController.navigate(Routes.MovieDetails.withId(trendingModel.id.toString()))
-                    }
+    Box(modifier = Modifier
+        .height(670.dp)
+        .width(screenWidth)
+        .clipToBounds()
+        .clickable {
+            when (trendingModel.media_type) {
+                "movie" -> {
+                    navController.navigate(Routes.MovieDetails.withId(trendingModel.id.toString()))
+                }
 
-                    "tv" -> {
-                        navController.navigate(Routes.SeriesDetails.withId(trendingModel.id.toString()))
-                    }
+                "tv" -> {
+                    navController.navigate(Routes.SeriesDetails.withId(trendingModel.id.toString()))
                 }
             }
-    ) {
+        }) {
         AsyncImage(
             model = "$IMAGE_BASE_URL${trendingModel.poster_path}",
             contentDescription = null,
@@ -251,14 +245,13 @@ fun PagerTrendingMovie(trendingMovies: List<TrendingModel>, navController: NavHo
 @Composable
 fun ItemPagerTrendingMovie(trendingModel: TrendingModel, navController: NavHostController) {
     val name = trendingModel.name ?: trendingModel.title
-    Box(
-        modifier = Modifier
-            .width(190.dp)
-            .padding(start = 16.dp)
-            .height(250.dp)
-            .clickable {
-                navController.navigate(Routes.MovieDetails.withId(trendingModel.id.toString()))
-            }) {
+    Box(modifier = Modifier
+        .width(190.dp)
+        .padding(start = 16.dp)
+        .height(250.dp)
+        .clickable {
+            navController.navigate(Routes.MovieDetails.withId(trendingModel.id.toString()))
+        }) {
         AsyncImage(
             model = "$IMAGE_BASE_URL${trendingModel.poster_path}",
             contentDescription = "TrendingMovies$name"

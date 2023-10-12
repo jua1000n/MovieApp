@@ -198,7 +198,6 @@ fun Body(detailSeriesModel: DetailSeriesModel) {
             }
         }
     }
-
 }
 
 @Composable
@@ -232,7 +231,6 @@ fun SheetScreen(detailSeriesModel: DetailSeriesModel) {
 
     if (isSheetOpen) {
         ScreenWithBottomSheet(sheetState, onDismissRequest = { isSheetOpen = false }) {
-//            seasons(seasons = detailSeriesModel.seasons)
             LazyColumn {
                 items(detailSeriesModel.seasons) { season ->
                     Box(modifier = Modifier
@@ -273,8 +271,7 @@ fun DetailSeason(detailSeriesModel: DetailSeriesModel, stateSeason: Seasons) {
     val detailSeasonState by detailViewModel.detailSeason.collectAsState()
     LaunchedEffect(detailSeriesModel.id, stateSeason.season_number) {
         detailViewModel.getDetailSeasonSeriesVM(
-            detailSeriesModel.id,
-            stateSeason.season_number
+            detailSeriesModel.id, stateSeason.season_number
         )
     }
     when (detailSeasonState) {
@@ -284,14 +281,18 @@ fun DetailSeason(detailSeriesModel: DetailSeriesModel, stateSeason: Seasons) {
             val seasonDetail =
                 (detailSeasonState as DetailSeasonSeriesState.Success).detailSeasonSeriesModel
             seasonDetail.episodes.map {
-                Box(modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp)
+                ) {
                     Column(modifier = Modifier.fillMaxWidth()) {
                         AsyncImage(
                             model = "${BuildConfig.IMAGE_BASE_URL}${it.still_path}",
                             contentDescription = "Image Season",
-                            modifier = Modifier.fillMaxWidth().height(220.dp)
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(220.dp)
                         )
                         Text(
                             text = "${it.episode_number}. ${it.name}",
@@ -302,9 +303,7 @@ fun DetailSeason(detailSeriesModel: DetailSeriesModel, stateSeason: Seasons) {
                         val (hours, minutes) = convertMinutesToHoursAndMinutes(it.runtime)
                         val res = if (hours == 0) "" else "$hours HR "
                         Text(
-                            text = "$res $minutes MIN",
-                            color = seasonRuntime,
-                            fontSize = 14.sp
+                            text = "$res $minutes MIN", color = seasonRuntime, fontSize = 14.sp
                         )
                     }
                 }
@@ -321,13 +320,17 @@ fun SeriesBasicInfo(detailSeriesModel: DetailSeriesModel) {
         color = grayBodyText,
         fontSize = 23.sp,
         fontWeight = FontWeight.Bold,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .fillMaxWidth()
     )
     Text(
         text = detailSeriesModel.overview,
         color = grayBodyText,
         fontSize = 14.sp,
-        modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp)
+        modifier = Modifier
+            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .fillMaxWidth()
     )
     Row(
         modifier = Modifier

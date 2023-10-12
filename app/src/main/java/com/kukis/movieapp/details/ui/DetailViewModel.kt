@@ -2,7 +2,6 @@ package com.kukis.movieapp.details.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kukis.movieapp.details.domain.model.DetailSeasonSeriesModel
 import com.kukis.movieapp.details.domain.usecase.GetDetailMovie
 import com.kukis.movieapp.details.domain.usecase.GetDetailSeasonSeries
 import com.kukis.movieapp.details.domain.usecase.GetDetailSeries
@@ -28,7 +27,8 @@ class DetailViewModel @Inject constructor(
     private var _detailSeries = MutableStateFlow<DetailSeriesState>(DetailSeriesState.Loading)
     val detailSeries = _detailSeries
 
-    private var _detailSeason = MutableStateFlow<DetailSeasonSeriesState>(DetailSeasonSeriesState.Loading)
+    private var _detailSeason =
+        MutableStateFlow<DetailSeasonSeriesState>(DetailSeasonSeriesState.Loading)
     val detailSeason = _detailSeason
 
     fun getDetailMovieVM(id: Int) {
@@ -69,7 +69,8 @@ class DetailViewModel @Inject constructor(
             if (result != null) {
                 _detailSeason.value = DetailSeasonSeriesState.Success(result)
             } else {
-                _detailSeason.value = DetailSeasonSeriesState.Error("Ha ocurrido un error, intentelo mas tarde")
+                _detailSeason.value =
+                    DetailSeasonSeriesState.Error("Ha ocurrido un error, intentelo mas tarde")
             }
         }
     }

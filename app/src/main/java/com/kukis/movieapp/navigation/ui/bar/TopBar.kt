@@ -31,21 +31,18 @@ import com.kukis.movieapp.navigation.ui.model.Routes
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopBar(navController: NavHostController, currentRoute: String, title: @Composable () -> Unit) {
-    CenterAlignedTopAppBar(
-        title = { title() },
+    CenterAlignedTopAppBar(title = { title() },
         navigationIcon = {
             IconButton(onClick = {
                 //Create lateral navigation
             }) {
                 if (currentRoute == Routes.MovieDetails.route || currentRoute == Routes.SeriesDetails.route) {
-                    Icon(
-                        imageVector = Icons.Rounded.ArrowBack,
+                    Icon(imageVector = Icons.Rounded.ArrowBack,
                         contentDescription = "LateralMenuTopBar",
                         tint = Color.White,
                         modifier = Modifier.clickable {
                             navController.popBackStack()
-                        }
-                    )
+                        })
                 } else {
                     Icon(
                         imageVector = Icons.Rounded.Menu,
@@ -82,22 +79,19 @@ fun TitleTopBar(text: String, contentDescription: String) {
         verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
     ) {
         IconButton(
-            onClick = { }, modifier = Modifier
+            onClick = { },
+            modifier = Modifier
                 .fillMaxWidth()
                 .size(30.dp)
                 .align(Alignment.CenterHorizontally)
         ) {
-            Icon(
-                painter = painterResource(id = R.drawable.hbo_max_white_logo),
+            Icon(painter = painterResource(id = R.drawable.hbo_max_white_logo),
                 contentDescription = contentDescription,
                 tint = Color.White,
-                modifier = Modifier.clickable { }
-            )
+                modifier = Modifier.clickable { })
         }
         Text(
-            text = text, fontSize = 15.sp,
-            color = Color.White,
-            fontWeight = FontWeight.Bold
+            text = text, fontSize = 15.sp, color = Color.White, fontWeight = FontWeight.Bold
         )
     }
 }

@@ -1,7 +1,6 @@
 package com.kukis.movieapp.navigation.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -15,16 +14,14 @@ import com.kukis.movieapp.details.ui.MovieDetailsScreen
 import com.kukis.movieapp.details.ui.SeriesDetailsScreen
 import com.kukis.movieapp.home.ui.HomeScreen
 import com.kukis.movieapp.movie.ui.MoviesScreen
-import com.kukis.movieapp.movie.ui.SearchScreen
 import com.kukis.movieapp.navigation.ui.bar.BottomBar
 import com.kukis.movieapp.navigation.ui.bar.TitleTopBar
 import com.kukis.movieapp.navigation.ui.bar.TopBar
 import com.kukis.movieapp.navigation.ui.model.Routes
+import com.kukis.movieapp.search.ui.SearchScreen
 import com.kukis.movieapp.series.ui.SeriesScreen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-//@Preview
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NavigationScreen() {
     val navController = rememberNavController()

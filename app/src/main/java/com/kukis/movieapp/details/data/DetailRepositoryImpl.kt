@@ -11,23 +11,24 @@ import javax.inject.Inject
 class DetailRepositoryImpl @Inject constructor(private val apiService: DetailClient) :
     DetailRepository {
     override suspend fun getDetailMovie(id: Int): DetailMovieModel? {
-        kotlin.runCatching { apiService.getDetailMovie(id) }
-            .onSuccess { return it.toDomain() }
+        kotlin.runCatching { apiService.getDetailMovie(id) }.onSuccess { return it.toDomain() }
             .onFailure { Log.i("Retrofit", "Error al traer el getDetailMovie ${it.message}") }
         return null
     }
 
     override suspend fun getDetailSeries(id: Int): DetailSeriesModel? {
-        kotlin.runCatching { apiService.getDetailSeries(id) }
-            .onSuccess { return it.toDomain() }
+        kotlin.runCatching { apiService.getDetailSeries(id) }.onSuccess { return it.toDomain() }
             .onFailure { Log.i("Retrofit", "Error al traer el getDetailSeries ${it.message}") }
         return null
     }
 
     override suspend fun getDetailSeasonSeries(id: Int, season: Int): DetailSeasonSeriesModel? {
         kotlin.runCatching { apiService.getDetailSeasonSeries(id, season) }
-            .onSuccess { return it.toDomain() }
-            .onFailure { Log.i("Retrofit", "Error al traer el getDetailSeasonSeries ${it.message}") }
+            .onSuccess { return it.toDomain() }.onFailure {
+                Log.i(
+                    "Retrofit", "Error al traer el getDetailSeasonSeries ${it.message}"
+                )
+            }
         return null
     }
 

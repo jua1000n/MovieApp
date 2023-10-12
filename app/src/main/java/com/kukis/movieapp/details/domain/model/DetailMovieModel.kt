@@ -18,13 +18,11 @@ data class DetailMovieModel(
     val title: String,
     val video: Boolean
 )
+
 data class Genres(
-    val id: Int,
-    val name: String
+    val id: Int, val name: String
 )
 
 data class ProductionCompanies(
-    val id: Int,
-    val logo_path: String,
-    val name: String
+    val id: Int, val logo_path: String, val name: String
 )
