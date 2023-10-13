@@ -6,6 +6,9 @@ import com.kukis.movieapp.details.data.DetailRepositoryImpl
 import com.kukis.movieapp.details.data.network.DetailClient
 import com.kukis.movieapp.details.domain.DetailRepository
 import com.kukis.movieapp.home.data.network.HomeClient
+import com.kukis.movieapp.movie.data.MovieRepositoryImpl
+import com.kukis.movieapp.movie.data.network.MovieClient
+import com.kukis.movieapp.movie.domain.MovieRepository
 import com.kukis.movieapp.search.data.SearchRepositoryImpl
 import com.kukis.movieapp.search.data.network.SearchClient
 import com.kukis.movieapp.search.domain.SearchRepository
@@ -54,6 +57,11 @@ object NetworkModule {
     fun provideSearchApiService(retrofit: Retrofit): SearchClient {
         return retrofit.create(SearchClient::class.java)
     }
+    @Provides
+    @Singleton
+    fun provideMovieApiService(retrofit: Retrofit): MovieClient {
+        return retrofit.create(MovieClient::class.java)
+    }
 
     @Provides
     fun providesDetailsRepository(apiService: DetailClient): DetailRepository {
@@ -63,5 +71,10 @@ object NetworkModule {
     @Provides
     fun providesSearchRepository(apiService: SearchClient): SearchRepository {
         return SearchRepositoryImpl(apiService)
+    }
+
+    @Provides
+    fun providesMovieRepository(apiService: MovieClient): MovieRepository {
+        return MovieRepositoryImpl(apiService)
     }
 }

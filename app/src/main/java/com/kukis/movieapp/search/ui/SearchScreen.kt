@@ -114,7 +114,8 @@ fun BarSearch(search: String, onValueChange: (String) -> Unit) {
                 .fillMaxWidth()
                 .padding(44.dp)
         )
-        TextField(value = search,
+        TextField(
+            value = search,
             placeholder = { Text(text = "Qué estas buscando?") },
             leadingIcon = {
                 if (search == "") {
