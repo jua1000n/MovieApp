@@ -12,28 +12,21 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -47,11 +40,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.kukis.movieapp.BuildConfig.IMAGE_BASE_URL
+import com.kukis.movieapp.core.components.AutoScrollPager
+import com.kukis.movieapp.core.components.PagerIndicator
 import com.kukis.movieapp.home.ui.model.TrendingModel
 import com.kukis.movieapp.navigation.ui.model.Routes
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -113,49 +105,7 @@ fun TrendingHome(myTrending: List<TrendingModel>, navController: NavHostControll
             ItemTrendingHome(trendingModel = myTrending[page], navController)
         }
         AutoScrollPager(pagerState, 5000)
-        PagerTrendingHome(pagerState = pagerState, numberPages = numberPages)
-    }
-}
-
-
-@Composable
-fun AutoScrollPager(pagerState: PagerState, intervalMillis: Long) {
-    val coroutineScope = rememberCoroutineScope()
-    val flow = flow {
-        while (true) {
-            delay(intervalMillis)
-            emit(Unit)
-        }
-    }
-
-    LaunchedEffect(pagerState) {
-        flow.collect {
-            val nextPage = (pagerState.currentPage + 1) % pagerState.pageCount
-            coroutineScope.launch {
-                pagerState.animateScrollToPage(nextPage)
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalFoundationApi::class)
-@Composable
-fun PagerTrendingHome(pagerState: PagerState, numberPages: Int) {
-    Row(
-        Modifier
-            .height(50.dp)
-            .fillMaxWidth(), horizontalArrangement = Arrangement.Center
-    ) {
-        repeat(numberPages) { iteration ->
-            val color = if (pagerState.currentPage == iteration) Color.White else Color.Gray
-            Box(
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clip(CircleShape)
-                    .background(color)
-                    .size(9.dp)
-            )
-        }
+        PagerIndicator(pagerState = pagerState, numberPages = numberPages)
     }
 }
 
@@ -180,7 +130,7 @@ fun ItemTrendingHome(trendingModel: TrendingModel, navController: NavHostControl
         }) {
         AsyncImage(
             model = "$IMAGE_BASE_URL${trendingModel.poster_path}",
-            contentDescription = null,
+            contentDescription = "HomeHeaderTrendingModel $trendingModel.id",
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.BottomCenter),
