@@ -2,10 +2,10 @@ package com.kukis.movieapp.movie.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kukis.movieapp.movie.domain.usecase.GetNowPlaying
-import com.kukis.movieapp.movie.domain.usecase.GetPopular
-import com.kukis.movieapp.movie.domain.usecase.GetTopRated
-import com.kukis.movieapp.movie.domain.usecase.GetUpcoming
+import com.kukis.movieapp.movie.domain.usecase.GetNowPlayingMovie
+import com.kukis.movieapp.movie.domain.usecase.GetPopularMovie
+import com.kukis.movieapp.movie.domain.usecase.GetTopRatedMovie
+import com.kukis.movieapp.movie.domain.usecase.GetUpcomingMovie
 import com.kukis.movieapp.movie.ui.state.MovieUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -17,10 +17,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MoviesViewModel @Inject constructor(
-    private val getNowPlaying: GetNowPlaying,
-    private val getPopular: GetPopular,
-    private val getTopRated: GetTopRated,
-    private val getUpcoming: GetUpcoming
+    private val getNowPlayingMovie: GetNowPlayingMovie,
+    private val getPopular: GetPopularMovie,
+    private val getTopRated: GetTopRatedMovie,
+    private val getUpcoming: GetUpcomingMovie
 ) : ViewModel() {
 
     private var _movie = MutableStateFlow<MovieUiState>(MovieUiState.Loading)
@@ -33,7 +33,7 @@ class MoviesViewModel @Inject constructor(
     private fun getMovieList() {
         viewModelScope.launch {
             _movie.value = MovieUiState.Loading
-            val resultNowPlaying = async(Dispatchers.IO) { getNowPlaying() }
+            val resultNowPlaying = async(Dispatchers.IO) { getNowPlayingMovie() }
             val resultPopular = async(Dispatchers.IO) { getPopular() }
             val resultTopRated = async(Dispatchers.IO) { getTopRated() }
             val resultUpcoming = async(Dispatchers.IO) { getUpcoming() }
@@ -48,9 +48,10 @@ class MoviesViewModel @Inject constructor(
             if (nowPlaying != null && popular != null && topRated != null && upcoming != null) {
                 _movie.value = MovieUiState.Success(
                     movieNowPlay = nowPlaying,
-                    moviePopular =  popular,
+                    moviePopular = popular,
                     movieTopRated = topRated,
-                    movieUpcoming = upcoming)
+                    movieUpcoming = upcoming
+                )
             } else {
                 // Al menos uno de los resultados es null
             }

@@ -55,6 +55,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.kukis.movieapp.BuildConfig
+import com.kukis.movieapp.core.components.ScreenDetailLoading
 import com.kukis.movieapp.details.domain.model.DetailSeriesModel
 import com.kukis.movieapp.details.domain.model.Seasons
 import com.kukis.movieapp.details.ui.components.ExpandableCard
@@ -79,21 +80,12 @@ fun SeriesDetailsScreen(id: String, navController: NavHostController) {
         }
 
         DetailSeriesState.Loading -> {
-            StateLoading()
+            ScreenDetailLoading()
         }
 
         is DetailSeriesState.Success -> {
             StateSuccess(detailSeriesState)
         }
-    }
-}
-
-@Composable
-fun StateLoading() {
-    Box(
-        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }
 

@@ -12,6 +12,9 @@ import com.kukis.movieapp.movie.domain.MovieRepository
 import com.kukis.movieapp.search.data.SearchRepositoryImpl
 import com.kukis.movieapp.search.data.network.SearchClient
 import com.kukis.movieapp.search.domain.SearchRepository
+import com.kukis.movieapp.series.data.network.SeriesClient
+import com.kukis.movieapp.series.data.network.SeriesRepositoryImpl
+import com.kukis.movieapp.series.domain.SeriesRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -64,6 +67,12 @@ object NetworkModule {
     }
 
     @Provides
+    @Singleton
+    fun provideSeriesApiService(retrofit: Retrofit): SeriesClient {
+        return retrofit.create(SeriesClient::class.java)
+    }
+
+    @Provides
     fun providesDetailsRepository(apiService: DetailClient): DetailRepository {
         return DetailRepositoryImpl(apiService)
     }
@@ -76,5 +85,10 @@ object NetworkModule {
     @Provides
     fun providesMovieRepository(apiService: MovieClient): MovieRepository {
         return MovieRepositoryImpl(apiService)
+    }
+
+    @Provides
+    fun providesSeriesRepository(apiService: SeriesClient): SeriesRepository {
+        return SeriesRepositoryImpl(apiService)
     }
 }

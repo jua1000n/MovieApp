@@ -13,12 +13,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,10 +35,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.kukis.movieapp.BuildConfig.IMAGE_BASE_URL
+import com.kukis.movieapp.core.components.ScreenDetailLoading
 import com.kukis.movieapp.details.domain.model.DetailMovieModel
 import com.kukis.movieapp.details.ui.components.ExpandableCard
 import com.kukis.movieapp.details.ui.state.DetailMovieState
 import com.kukis.movieapp.ui.theme.grayBodyText
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun MovieDetailsScreen(id: String, navController: NavHostController) {
@@ -55,11 +59,7 @@ fun MovieDetailsScreen(id: String, navController: NavHostController) {
         }
 
         DetailMovieState.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
+            ScreenDetailLoading()
         }
 
         is DetailMovieState.Success -> {
@@ -91,7 +91,7 @@ fun HeaderImage(detailMovieModel: DetailMovieModel) {
     ) {
         AsyncImage(
             model = "$IMAGE_BASE_URL${detailMovieModel.poster_path}",
-            contentDescription = null,
+            contentDescription = "HeaderMovieDetail${detailMovieModel.id}",
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.BottomCenter),
@@ -112,7 +112,6 @@ fun HeaderImage(detailMovieModel: DetailMovieModel) {
                 )
         ) {
             Row(
-                //horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
