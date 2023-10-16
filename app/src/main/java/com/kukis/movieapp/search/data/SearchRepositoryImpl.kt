@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class SearchRepositoryImpl @Inject constructor(private val apiService: SearchClient) :
     SearchRepository {
-    override suspend fun getSearchMulti(search: String): SearchContentModel? {
-        kotlin.runCatching { apiService.getSearchMulti(search) }.onSuccess { return it.toDomain() }
+    override suspend fun getSearchMulti(search: String, page: Int): SearchContentModel? {
+        kotlin.runCatching { apiService.getSearchMulti(search, page) }.onSuccess { return it.toDomain() }
             .onFailure { Log.i("Retrofit", "Error al traer el getSearchMulti ${it.message}") }
         return null
     }
