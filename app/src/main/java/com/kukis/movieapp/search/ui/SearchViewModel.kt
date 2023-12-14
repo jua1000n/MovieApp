@@ -19,7 +19,7 @@ class SearchViewModel @Inject constructor(
     private val getSearchMulti: GetSearchMulti
 ) : ViewModel() {
     private val _search = MutableStateFlow<String>("")
-    val search = _search
+
 
     private val _searchUiState = MutableStateFlow<SearchUiState>(SearchUiState.Loading())
     val searchUiState = _searchUiState
